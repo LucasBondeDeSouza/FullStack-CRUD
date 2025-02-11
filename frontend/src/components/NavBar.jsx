@@ -1,16 +1,19 @@
 import React from "react";
 
-export default ({ onOpen }) => {
+export default ({ onOpen, onSearch }) => {
+    const handleSearchChange = (e) => {
+        onSearch(e.target.value);
+    }
 
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 p-4">
             <div className="navbar-start">
                 <a className="btn btn-ghost text-xl">ClientsI</a>
             </div>
 
             <div className="navbar-center">
                 <div className="form-control">
-                    <input type="text" placeholder="Search" className="input input-bordered w-48 md:w-auto" />
+                    <input type="text" placeholder="Search" onChange={handleSearchChange} className="input input-bordered w-48 md:w-auto" />
                 </div>
             </div>
 
