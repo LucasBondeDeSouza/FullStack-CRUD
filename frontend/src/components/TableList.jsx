@@ -1,31 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios"
 
-export default ({ handleOpen, searchTerm }) => {
-    const [tableData, setTableData] = useState([])
+export default ({ handleOpen, tableData, setTableData, searchTerm }) => {
     const [error, setError] = useState(null)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:3000/api/clients')
-                setTableData(response.data)
-            } catch (err) {
-                setError(err.message)
-            }
-        }
-
-        fetchData()
-    }, [])
 
     const filteredData = tableData.filter(client => 
         client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         client.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
         client.job.toLowerCase().includes(searchTerm.toLowerCase())
-    )    
+    )   
+    
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this cient?")
+        if (confirmDelete) {
+            try {
+                await axios.delete(`http://localhost:3000/api/clients/${id}`)
+                setTableData((prevData) => prevData.filter(client => client.id !== id))
+            } catch (err) {
+                setError(err.message)
+            }
+        }
+    }
 
     return (
-        <>
+        <div className="px-4">
             {error && <div className="alert alert-error">{error}</div>}
 
             <div className="overflow-x-auto mt-10">
@@ -44,28 +42,28 @@ export default ({ handleOpen, searchTerm }) => {
                     <tbody className="hover">
                         {/* row 1 */}
                         {filteredData.map((client) => (
-                            <tr>
+                            <tr key={client.id}>
                                 <th>{client.id}</th>
                                 <td>{client.name}</td>
                                 <td>{client.email}</td>
                                 <td>{client.job}</td>
                                 <td>{client.rate}</td>
                                 <td>
-                                    <button className={`btn rounded-full w-20 ${client.isActive ? 'btn-primary' : 'btn-outline btn-primary'}`}>
+                                    <button className={`btn rounded-full w-20 ${client.isactive ? 'btn-primary' : 'btn-outline btn-primary'}`}>
                                         {client.isactive ? 'Active' : 'Inactive'}
                                     </button>
                                 </td>
                                 <td>
-                                    <button onClick={() => handleOpen('edit')} className="btn btn-secondary">Update</button>
+                                    <button onClick={() => handleOpen('edit', client)} className="btn btn-secondary">Update</button>
                                 </td>
                                 <td>
-                                    <button className="btn btn-accent">Delete</button>
+                                    <button className="btn btn-accent" onClick={() => handleDelete(client.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
-        </>
+        </div>
     )
 }
