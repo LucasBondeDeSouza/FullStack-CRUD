@@ -50,26 +50,26 @@ export default ({ isOpen, onClose, mode, onSubmit, clientData }) => {
                     <form method="dialog" onSubmit={handleSubmit}>
                         <label className="input input-bordered my-4 flex items-center gap-2 w-full">
                             Name
-                            <input type="text" className="grow" value={name} onChange={(e) => setName(e.target.value)} />
+                            <input type="text" className="grow" value={name} required onChange={(e) => setName(e.target.value)} />
                         </label>
 
                         <label className="input input-bordered my-4 flex items-center gap-2 w-full">
                             Email
-                            <input type="text" className="grow" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <input type="email" className="grow" value={email} required onChange={(e) => setEmail(e.target.value)} />
                         </label>
 
                         <label className="input input-bordered my-4 flex items-center gap-2 w-full">
                             Job
-                            <input type="text" className="grow" value={job} onChange={(e) => setJob(e.target.value)} />
+                            <input type="text" className="grow" value={job} required onChange={(e) => setJob(e.target.value)} />
                         </label>
 
                         <div className="flex mb-4 justify-between my-4">
                             <label className="input input-bordered mr-4 flex items-center gap-2">
                                 Rate
-                                <input type="number" className="grow" value={rate} onChange={(e) => setRate(e.target.value)} />
+                                <input type="number" className="grow" value={rate} reuired onChange={(e) => setRate(e.target.value)} />
                             </label>
 
-                            <select value={status ? 'Active' : 'Inactive'} onChange={handleStatusChange} className="select select-bordered w-full max-w-xs">
+                            <select value={status ? 'Active' : 'Inactive'} required onChange={handleStatusChange} className="select select-bordered w-full max-w-xs">
                                 <option>Inactive</option>
                                 <option>Active</option>
                             </select>

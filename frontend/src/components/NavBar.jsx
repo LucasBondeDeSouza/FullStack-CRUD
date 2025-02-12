@@ -8,7 +8,7 @@ export default ({ onOpen, onSearch }) => {
     return (
         <div className="navbar bg-base-100 p-4">
             <div className="navbar-start">
-                <a className="btn btn-ghost text-xl">ClientsI</a>
+                <a className="btn btn-ghost text-xl">Clients</a>
             </div>
 
             <div className="navbar-center">
